@@ -5,8 +5,8 @@ import './App.css'
 
 function App(props) {
   return (
-    <div className='App box-border'>
-      <Header/>
+    <div className='box-border App'>
+      <Header />
       <Content/>
       
     </div>

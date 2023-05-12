@@ -1,7 +1,16 @@
+div, input {
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
   padding: 0 2rem;
   max-width: 1000px;
   margin: 0 auto;
+  
 }
-
+@media (max-width: 860px) {
+  .App {
+    margin-top: 5px;
+  }
+}

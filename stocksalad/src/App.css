@@ -1,5 +1,10 @@
-div, input {
+div,
+input {
   box-sizing: border-box;
+}
+
+body {
+  background-color: #eee;
 }
 
 .App {
@@ -7,7 +12,6 @@ div, input {
   padding: 0 2rem;
   max-width: 1000px;
   margin: 0 auto;
-  
 }
 @media (max-width: 860px) {
   .App {

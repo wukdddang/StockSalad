@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 function User(props) {
   let [loginStatus, setLoginStatus] = useState(false);
   let [id, setId] = useState("");
   let [pw, setPw] = useState("");
+  let navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem("ss_user")) {
       setLoginStatus(false);
     } else {
       setLoginStatus(true);
     }
-  });
+  }, [loginStatus]);
   return (
     <div className="flex justify-center mt-20 drop-shadow-xl">
       {loginStatus ? (
@@ -34,17 +36,19 @@ function User(props) {
               onChange={(e) => {
                 setPw(e.target.value);
               }}
+              type="password"
             ></input>
           </div>
           <div
             onClick={() => {
+              if (id === '' || pw === '') return;
               localStorage.setItem("ss_user", JSON.stringify({
                 id,
                 pw,
               }));
+              navigate(0);
             }}
             className="block px-6 py-2 mt-5 transition border-2 rounded-lg cursor-pointer hover:bg-blue-500 hover:text-white"
-            type="submit"
           >
             로그인하기
           </div>

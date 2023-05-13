@@ -19,7 +19,7 @@ function App(props) {
           }
         />
         <Route
-          path="/detail"
+          path="/detail/:product"
           element={
             <Detail/>
           }

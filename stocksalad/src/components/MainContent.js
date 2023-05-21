@@ -1,39 +1,42 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Search, TrendingDown, TrendingUp } from "react-feather";
-import Stock from "./Stock";
+import StockBlock from "./StockBlock";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
+import axios from "axios";
 
-function Content(props) {
+function MainContent(props) {
   let navigate = useNavigate();
   let [text, setText] = useState("");
   let [show, setShow] = useState(true);
+
+  let [reqStocks, setReqStocks] = useState([]);
   let [stocks, setStocks] = useState([
     {
       title: "spy",
       stat: "rise",
       price: "$ 412.59",
       percent: "1.25",
-      country: 'USA'
+      country: "USA",
     },
     {
       title: "qqq",
       stat: "down",
       price: "$ 312.59",
       percent: "2.15",
-      country: 'USA'
+      country: "USA",
     },
     {
       title: "kospi",
       stat: "rise",
       price: "₩ 2,491",
       percent: "1.02",
-      country: 'KOR'
+      country: "KOR",
     },
   ]);
 
   let canClick = useRef(true);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = async (e) => {
     const inputValue = e.target.value;
     setText(inputValue);
     setShow(inputValue !== ""); // 입력 값이 있는 경우에만 show를 true로 설정
@@ -50,7 +53,7 @@ function Content(props) {
 
   return (
     <>
-      <div className="flex items-center w-full h-20 mt-8">
+      <div className="flex items-center w-full h-20">
         <div className="relative w-full drop-shadow-md ">
           <input
             onChange={handleInputChange}
@@ -62,6 +65,7 @@ function Content(props) {
           ></input>
           <Search className="absolute left-4 bottom-2 " />
           {text === "" ? (
+            // 입력이 비었다면 일단 빈창을 보여준다. -> 다른 방법이 있을까?
             <></>
           ) : show ? (
             <div className="absolute w-full bg-white border-4 rounded-lg drop-shadow-xl">
@@ -78,13 +82,17 @@ function Content(props) {
                       <>
                         <TrendingUp className="flex-1 text-red-500" />
                         <div className="flex-1">{stock.price}</div>
-                        <div className="flex-1 text-red-400">+{stock.percent}%</div>
+                        <div className="flex-1 text-red-400">
+                          +{stock.percent}%
+                        </div>
                       </>
                     ) : (
                       <>
                         <TrendingDown className="flex-1 text-blue-500" />
                         <div className="flex-1">{stock.price}</div>
-                        <div className="flex-1 text-blue-400">-{stock.percent}%</div>
+                        <div className="flex-1 text-blue-400">
+                          -{stock.percent}%
+                        </div>
                       </>
                     )}
                   </Link>
@@ -97,10 +105,10 @@ function Content(props) {
         </div>
       </div>
       {stocks.map((stock) => (
-        <Stock props={stock} key={stock.title} />
+        <StockBlock props={stock} key={stock.title} />
       ))}
     </>
   );
 }
 
-export default Content;
+export default MainContent;

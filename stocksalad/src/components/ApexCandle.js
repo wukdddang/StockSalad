@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
-function ApexCandle(props) {
+function ApexCandle() {
   let [state, setState] = useState({
     series: [
       {
@@ -252,16 +252,29 @@ function ApexCandle(props) {
     options: {
       chart: {
         type: "candlestick",
-        height: 350,
       },
       title: {
-        text: "CandleStick Chart",
+        text: "일별 주가 변동 그래프",
         align: "left",
       },
       xaxis: {
         type: "datetime",
+        labels: {
+          style: {
+            fontSize: "0.6rem",
+          },
+        },
       },
       yaxis: {
+        labels: {
+          align: "right",
+          minWidth: 0,
+          maxWidth: 50,
+          style: {
+            color: [],
+            fontSize: "0.6rem",
+          },
+        },
         tooltip: {
           enabled: true,
         },
@@ -275,7 +288,6 @@ function ApexCandle(props) {
         options={state.options}
         series={state.series}
         type="candlestick"
-        height={350}
       />
     </div>
   );

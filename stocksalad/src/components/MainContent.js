@@ -5,9 +5,9 @@ import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import axios from "axios";
 
 function MainContent(props) {
-  let navigate = useNavigate();
   let [text, setText] = useState("");
   let [show, setShow] = useState(true);
+  const inputRef = useRef(null);
 
   let [reqStocks, setReqStocks] = useState([]);
   let [stocks, setStocks] = useState([
@@ -42,6 +42,15 @@ function MainContent(props) {
     setShow(inputValue !== ""); // 입력 값이 있는 경우에만 show를 true로 설정
   };
 
+  const handleESC = (e) => {
+    if (e.key === "Escape") {
+      setTimeout(() => {
+        setShow(false);
+        inputRef.current.blur();
+      }, 100);
+    }
+  };
+
   const handleDisappear = (e) => {
     setTimeout(() => {
       setShow(false);
@@ -56,10 +65,12 @@ function MainContent(props) {
       <div className="flex items-center w-full h-20">
         <div className="relative w-full drop-shadow-md ">
           <input
+            ref={inputRef}
             onChange={handleInputChange}
             onBlur={handleDisappear}
             onFocus={handleAppear}
             value={text}
+            onKeyDown={handleESC}
             className="w-full py-2 pl-12 transition duration-300 bg-white rounded-lg outline-none focus:ring focus:border-blue-100"
             placeholder="원하는 주식명을 검색해주세요"
           ></input>
@@ -104,8 +115,13 @@ function MainContent(props) {
           )}
         </div>
       </div>
-      {stocks.map((stock) => (
-        <StockBlock props={stock} key={stock.title} />
+      {stocks.map((stock, idx) => (
+        <div
+          key={stock.title}
+          className="flex w-full h-16 bg-white border-4 rounded-lg"
+        >
+          hi!
+        </div>
       ))}
     </>
   );

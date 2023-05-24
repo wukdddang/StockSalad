@@ -1,16 +1,15 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import StockDetail from "../components/StockDetail";
+import ApexCandle from "../components/ApexCandle";
 
-function Detail(props) {
+function StockDetail() {
   let { product } = useParams();
-  console.log(product);
   return (
-    <div className="w-full p-10 bg-white rounded-lg">
+    <div className="w-full h-full px-6 py-4 bg-white rounded-lg">
       <h2 className="mb-6 text-3xl font-bold text-left">{product}</h2>
-      <StockDetail />
+      <ApexCandle />
     </div>
   );
 }
 
-export default Detail;
+export default StockDetail;

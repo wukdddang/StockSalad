@@ -15,24 +15,21 @@ class TestController {
                 url = "https://news.example.com/1",
                 title = "News Title 1",
                 description = "News Description 1",
-                summary = "News Summary 1",
-                dateTime = "2023-05-13T10:15:30"
+                writeDateTime = "2023-05-13T10:15:30"
             ),
             News(
                 id = "2",
                 url = "https://news.example.com/2",
                 title = "News Title 2",
                 description = "News Description 2",
-                summary = "News Summary 2",
-                dateTime = "2023-05-13T10:15:31"
+                writeDateTime = "2023-05-13T10:15:31"
             ),
             News(
                 id = "3",
                 url = "https://news.example.com/3",
                 title = "News Title 3",
                 description = "News Description 3",
-                summary = "News Summary 3",
-                dateTime = "2023-05-13T10:15:32"
+                writeDateTime = "2023-05-13T10:15:32"
             )
         )
     }

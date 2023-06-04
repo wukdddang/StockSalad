@@ -1,45 +1,28 @@
 # StockSalad
 
-## 관심있는 주식 상품들을 GPT에게 물어서 해당 상품의 현재 상황을 웹과 모바일에서 빠르고 정확하게 파악하자!
+## ✏️ 프로젝트 소개
+관심있는 주식 상품들에 대한 정보를 한 눈에 볼 수 있는 웹사이트입니다. 일별 가격 변동 그래프, 뉴스 등을 제공합니다. 또한, 사용자가 원하는 주식 상품들을 포트폴리오에 추가하여 관리할 수 있습니다.
 
-### 어떻게 애플리케이션 아키텍쳐를 구성할 것인가? (회의 필요)
+## 📅 프로젝트 기간
+2023.04.04 ~ 
 
-#### Front-End
+## 📌 프로젝트 목표
 
-- [ ] React를 바탕의 웹 사용자들을 위한 페이지 마련
+### 프론트엔드
+추후 작성
 
-  - [ ] Header
-    - [x] 로그인
-      - [x] 디자인 (~5/13)
-      - [x] 기능 (localStorage, ~5/13)
-    - [ ] 메뉴
-      - [x] 디자인 (~5/11)
-      - [x] 기능 (사이드바 => 유저 창으로 선회, ~5/13)
-    - [ ] 라이트 / 다크 모드
-      - [x] 디자인 (~5/11)
-      - [ ] 기능 (보류. 다른 기능 우선)
-  - [ ] Input 박스
-    - [x] 디자인 (~5/11)
-    - [ ] 기능
-      - [x] 임시 데이터 출력 (~5/12)
-      - [x] ESC 눌러서 포커스 해제
-      - [ ] 키보드 방향키로 포커스 이동
-      - [ ] 데이터 검색해서 출력
-      - [ ] DB 데이터 출력
-  - [ ] 주식 상품 박스
-    - [ ] 디자인 (~5/28)
-    - [ ] 기능
-      - [ ] 개인 사용자의 정보를 저장해서 원하는 주식 상품들의 목록 보여주기
-  - [ ] 주식 상세정보 페이지
-    - [ ] 디자인 (~5/28)
-      - [x] 임시 그래프 출력
-      - [ ] 데이터 받아와서 출력
+### 백엔드
+추후 작성
 
-- [ ] React-PWA를 활용한 네이티브 사용환경 구성
-  - [ ] PWA 프로젝트로 환경설정
+### 기술스택
 
-#### Back-End
-
-- 데이터베이스 or 프레임워크
-- 등등
-- 등등
+<table>
+  <tr>
+    <td>Frontend</td>
+    <td><img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white"/> <img src="https://img.shields.io/badge/Tailwind CSS-06B6D4?style=flat&logo=TailwindCSS&logoColor=white"/> <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/></td>
+  </tr>
+  <tr>
+    <td>Backend</td>
+    <td> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=SpringBoot&logoColor=white"/> <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=flat&logo=Kotlin&logoColor=white"/> <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white"/> </td>
+  </tr>
+</table>

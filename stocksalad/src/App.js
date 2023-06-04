@@ -7,7 +7,7 @@ import "./App.css";
 import StockDetail from "./pages/StockDetail";
 import User from "./pages/User";
 
-function App(props) {
+function App() {
   // localStorage에서 회원 아이디 받아오기
   return (
     <div className="box-border App">

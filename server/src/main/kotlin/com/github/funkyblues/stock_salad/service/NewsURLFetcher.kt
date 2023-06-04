@@ -1,6 +1,7 @@
 package com.github.funkyblues.stock_salad.service
 
 import com.github.funkyblues.stock_salad.Constants
+import com.github.funkyblues.stock_salad.Settings
 import com.github.funkyblues.stock_salad.util.MongoDBUtil
 import com.github.funkyblues.stock_salad.model.NewsURL
 import org.jsoup.Jsoup
@@ -18,6 +19,10 @@ import java.time.format.DateTimeFormatter
 class NewsURLFetcher {
     @Scheduled(fixedDelay = Constants.News.REQUEST_PERIOD)
     fun fetchNewsURL() {
+        if (!Settings.fetchNewsEnabled) {
+            return
+        }
+
         // 1. Create MongoDB connection
         val mongoTemplate = MongoDBUtil.getMongoTemplate()
 

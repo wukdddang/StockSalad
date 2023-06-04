@@ -1,6 +1,7 @@
 package com.github.funkyblues.stock_salad.service
 
 import com.github.funkyblues.stock_salad.Constants
+import com.github.funkyblues.stock_salad.Settings
 import com.github.funkyblues.stock_salad.model.News
 import com.github.funkyblues.stock_salad.model.NewsURL
 import com.github.funkyblues.stock_salad.util.MongoDBUtil
@@ -17,6 +18,10 @@ import java.lang.Exception
 class NewsDetailUpdater {
     @Scheduled(fixedDelay = Constants.News.REQUEST_PERIOD)
     fun updateNewsDetail() {
+        if (!Settings.fetchNewsEnabled) {
+            return
+        }
+
         // 1. Create MongoDB connection
         val mongoTemplate = MongoDBUtil.getMongoTemplate()
 

@@ -15,6 +15,8 @@ object Constants {
             const val DB_USERNAME = "db_username"
             const val DB_PASSWORD = "db_password"
             const val API_KEY = "api_key"
+            const val FETCH_NEWS = "fetch_news"
+            const val FETCH_STOCK = "fetch_stock"
         }
     }
 

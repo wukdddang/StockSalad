@@ -37,4 +37,10 @@ object Settings {
 
     val apiKey: String
         get() = currentSettings[Constants.Settings.Key.API_KEY].asText()
+
+    val fetchNewsEnabled: Boolean
+        get() = currentSettings[Constants.Settings.Key.FETCH_NEWS].asBoolean()
+
+    val fetchStockEnabled: Boolean
+        get() = currentSettings[Constants.Settings.Key.FETCH_STOCK].asBoolean()
 }

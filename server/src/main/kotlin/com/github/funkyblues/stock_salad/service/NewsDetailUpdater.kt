@@ -32,30 +32,32 @@ class NewsDetailUpdater {
         val notUpdatedNewsList: List<String> = mongoTemplate.find(query, NewsURL::class.java).map { it.url }
 
         // 3. Update news
-        fetchNewsFromNaver(notUpdatedNewsList) { news ->
-            try {
-                mongoTemplate.insert(news)
-                mongoTemplate.updateFirst(
-                    Query(Criteria.where("url").`is`(news.url)),
-                    Update().set("isDetailCreated", true), NewsURL::class.java
-                )
-            } catch (e: Exception) {
-                // Fail to insert news
-                mongoTemplate.updateFirst(Query(Criteria.where("url").`is`(news.url)),
-                    Update().inc("failCount", 1), NewsURL::class.java)
+        for (url in notUpdatedNewsList) {
+            fetchNewsFromNaver(url) { news ->
+                try {
+                    mongoTemplate.insert(news)
+                    mongoTemplate.updateFirst(
+                        Query(Criteria.where("url").`is`(news.url)),
+                        Update().set("isDetailCreated", true), NewsURL::class.java
+                    )
+                } catch (e: Exception) {
+                    // Fail to insert news
+                    mongoTemplate.updateFirst(
+                        Query(Criteria.where("url").`is`(news.url)),
+                        Update().inc("failCount", 1), NewsURL::class.java
+                    )
+                }
             }
+            Thread.sleep(Constants.News.SLEEP_TIME)
         }
     }
 
-    private fun fetchNewsFromNaver(notUpdatedNewsList: List<String>, insertNews: (News) -> Unit) {
-        for (url in notUpdatedNewsList) {
-            val document = Jsoup.connect(url).get()
-            val news = getNewsFromDocument(url, document)
-            insertNews(news)
+    private fun fetchNewsFromNaver(url: String, insertNews: (News) -> Unit) {
+        val document = Jsoup.connect(url).get()
+        val news = getNewsFromDocument(url, document)
+        insertNews(news)
 
-            println("[NewsDetailUpdater] News detail updated: $url, ${news.title}, ${news.categoryName}")
-            Thread.sleep(Constants.News.SLEEP_TIME)
-        }
+        println("[NewsDetailUpdater] News detail updated: $url, ${news.title}, ${news.categoryName}")
     }
 
     private fun getNewsFromDocument(url: String, document: Document): News {

@@ -5,7 +5,6 @@ import com.github.funkyblues.stock_salad.Settings
 import com.github.funkyblues.stock_salad.util.MongoDBUtil
 import com.github.funkyblues.stock_salad.model.NewsURL
 import org.jsoup.Jsoup
-import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.scheduling.annotation.Scheduled
@@ -27,14 +26,23 @@ class NewsURLFetcher {
         val mongoTemplate = MongoDBUtil.getMongoTemplate()
 
         // 2. Get latest saved news list from MongoDB to prevent duplication
-        val latestSavedNewsList = getNewsFromMongodb(mongoTemplate)
+        val latestSavedNewsList = HashSet(getNewsFromMongodb(mongoTemplate))
 
         // 3. Fetch latest news list
-        fetchNewsURLFromNaver(latestSavedNewsList) { url ->
-            try {
-                mongoTemplate.insert(NewsURL(url = url))
-            } catch (e: DuplicateKeyException) {
-                // Ignore duplicated key error
+        for (date in getValidDateList()) {
+            for (page in 1..Constants.News.MAX_PAGE) {
+                val keepCalling = fetchNewsURLFromNaver(date, page, latestSavedNewsList) { url ->
+                    try {
+                        mongoTemplate.insert(NewsURL(url = url))
+                    } catch (e: DuplicateKeyException) {
+                        // Ignore duplicated key error
+                    }
+                }
+                Thread.sleep(Constants.News.SLEEP_TIME)
+
+                if (!keepCalling) {
+                    break
+                }
             }
         }
     }
@@ -50,29 +58,31 @@ class NewsURLFetcher {
             .reversed()
     }
 
-    fun fetchNewsURLFromNaver(latestSavedNewsList: List<String>, insertNewsURL: (String) -> Unit) {
-        val latestSavedNewsSet = HashSet<String>(latestSavedNewsList)
-        for (date in getValidDateList()) {
-            for (page in 1..Constants.News.MAX_PAGE) {
-                val url = Constants.News.QUERY_URL.format(date, page)
-                val document = Jsoup.connect(url).get()
-                val fetchedNewsList = getNewsURLFromDocument(document)
-                val parsedPage = getPageFormDocument(document)
+    /**
+     * @return If true, the function should be called again, if false, it should stop.
+     */
+    fun fetchNewsURLFromNaver(date: String, page: Int, latestSavedNewsSet: Set<String>, insertNewsURL: (String) -> Unit): Boolean {
+        val url = Constants.News.QUERY_URL.format(date, page)
+        val document = Jsoup.connect(url).get()
+        val fetchedNewsList = getNewsURLFromDocument(document)
+        val parsedPage = getPageFormDocument(document)
 
-                println("[NewsURLFetcher] url: $url, page: $parsedPage")
-                if (parsedPage != null && parsedPage != page) {
-                    println("[NewsURLFetcher] page mismatched. parsedPage: $parsedPage, page: $page")
-                    break
-                }
-
-                for (newsURL in fetchedNewsList) {
-                    if (latestSavedNewsSet.contains(newsURL)) return
-                    insertNewsURL(newsURL)
-                }
-
-                Thread.sleep(Constants.News.SLEEP_TIME)
-            }
+        // If the page is not parsed or the page is end, stop fetching
+        println("[NewsURLFetcher] url: $url, page: $parsedPage")
+        if (parsedPage != null && parsedPage != page) {
+            println("[NewsURLFetcher] page mismatched. parsedPage: $parsedPage, page: $page")
+            return false
         }
+
+        for (newsURL in fetchedNewsList) {
+            // If the news is already saved, stop fetching
+            if (latestSavedNewsSet.contains(newsURL)) {
+                return false
+            }
+            insertNewsURL(newsURL)
+        }
+
+        return true
     }
 
     fun getNewsURLFromDocument(document: org.jsoup.nodes.Document) : List<String> {
@@ -100,10 +110,7 @@ class NewsURLFetcher {
     }
 
     fun getNewsFromMongodb(mongoTemplate: MongoTemplate): List<String> {
-        val query = Query()
-            .with(Sort.by(Sort.Direction.DESC, "_id"))
-            .limit(Constants.News.RECENT_NEWS_COUNT)
-        val doc = mongoTemplate.find(query, NewsURL::class.java)
+        val doc = mongoTemplate.find(Query(), NewsURL::class.java)
         return doc.map {it.url}
     }
 }

@@ -32,4 +32,14 @@ data class StockPrice(
             mrktCtg = mrktCtg
         )
     }
+
+    fun getStockResponse(): StockResponse {
+        return StockResponse(
+            srtnCd = srtnCd,
+            isinCd = isinCd,
+            itmsNm = itmsNm,
+            mrktCtg = mrktCtg,
+            clpr = clpr
+        )
+    }
 }

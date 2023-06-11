@@ -32,4 +32,17 @@ object Constants {
         const val MAX_FAIL_COUNT = 5
         const val MIN_NEWS_COUNT_IN_PAGE = 20
     }
+
+    object Stock {
+        const val QUERY_URL = "https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo" +
+                "?serviceKey=%s" +
+                "&numOfRows=%d" +
+                "&pageNo=%d" +
+                "&resultType=%s" +
+                "&basDt=%s"
+        const val SLEEP_TIME = 1000L
+        const val NUM_OF_ROWS = 100
+        const val RESULT_TYPE = "json"
+        const val MAX_PAGE = 100
+    }
 }

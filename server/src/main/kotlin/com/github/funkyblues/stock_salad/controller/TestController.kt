@@ -39,28 +39,24 @@ class TestController {
         return listOf(
             Stock(
                 id = "1",
-                name = "Company 1",
-                price = "100.00"
+                srtnCd = "123456",
+                isinCd = "123456789012",
+                itmsNm = "종목명",
+                mrktCtg = "코스피",
             ),
             Stock(
                 id = "2",
-                name = "Company 2",
-                price = "200.00"
+                srtnCd = "123456",
+                isinCd = "123456789012",
+                itmsNm = "종목명",
+                mrktCtg = "코스피",
             ),
             Stock(
                 id = "3",
-                name = "Company 3",
-                price = "300.00"
-            ),
-            Stock(
-                id = "4",
-                name = "Company 4",
-                price = "400.00"
-            ),
-            Stock(
-                id = "5",
-                name = "Company 5",
-                price = "500.00"
+                srtnCd = "123456",
+                isinCd = "123456789012",
+                itmsNm = "종목명",
+                mrktCtg = "코스피",
             )
         )
     }

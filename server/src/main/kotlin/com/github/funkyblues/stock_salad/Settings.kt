@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
 object Settings {
-    private const val currentMode = Constants.Settings.Key.DEV_MODE
     private val settings: JsonNode
 
     init {
@@ -13,6 +12,9 @@ object Settings {
         val objectMapper = jacksonObjectMapper()
         this.settings = objectMapper.readTree(settingsFile)
     }
+
+    private val currentMode: String
+        get() = settings[Constants.Settings.Key.MODE].asText()
 
     private val currentSettings: JsonNode
         get() = settings[currentMode]

@@ -6,8 +6,7 @@ object Constants {
     object Settings {
         const val FILE_NAME = "settings.json"
         object Key {
-            const val DEV_MODE = "dev"
-            const val PROD_MODE = "prod"
+            const val MODE = "mode"
             const val DB_HOST = "db_host"
             const val DB_PORT = "db_port"
             const val DB_NAME = "db_name"
@@ -17,6 +16,11 @@ object Constants {
             const val API_KEY = "api_key"
             const val FETCH_NEWS = "fetch_news"
             const val FETCH_STOCK = "fetch_stock"
+        }
+
+        object Value {
+            const val DEV_MODE = "dev"
+            const val PROD_MODE = "prod"
         }
     }
 

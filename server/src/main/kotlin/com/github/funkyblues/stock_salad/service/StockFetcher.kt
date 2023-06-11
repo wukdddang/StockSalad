@@ -3,8 +3,8 @@ package com.github.funkyblues.stock_salad.service
 import com.github.funkyblues.stock_salad.Constants
 import com.github.funkyblues.stock_salad.Settings
 import com.github.funkyblues.stock_salad.model.StockPrice
-import com.github.funkyblues.stock_salad.model.StockResponse
-import com.github.funkyblues.stock_salad.model.StockResponseWrapper
+import com.github.funkyblues.stock_salad.model.StockKorAPIResponse
+import com.github.funkyblues.stock_salad.model.StockKorAPIResponseWrapper
 import com.github.funkyblues.stock_salad.util.MongoDBUtil
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
@@ -70,10 +70,10 @@ class StockFetcher {
         val url = Constants.Stock.QUERY_URL.format(URLEncoder.encode(Settings.apiKey, StandardCharsets.UTF_8),
             Constants.Stock.NUM_OF_ROWS, page, Constants.Stock.RESULT_TYPE, date)
         val client = WebClient.create(Constants.Stock.QUERY_URL)
-        val response: StockResponse = client.get()
+        val response: StockKorAPIResponse = client.get()
             .uri(URI.create(url))
             .header("accept", "application/json")
-            .retrieve().bodyToMono(StockResponseWrapper::class.java).block()!!.response
+            .retrieve().bodyToMono(StockKorAPIResponseWrapper::class.java).block()!!.response
         val stockPrices = response.body.items.item
         for (stockPrice in stockPrices) {
             insertStock(stockPrice)

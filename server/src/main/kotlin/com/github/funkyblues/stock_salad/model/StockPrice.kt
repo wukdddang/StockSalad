@@ -39,7 +39,8 @@ data class StockPrice(
             isinCd = isinCd,
             itmsNm = itmsNm,
             mrktCtg = mrktCtg,
-            clpr = clpr
+            clpr = clpr,
+            fltRt = fltRt
         )
     }
 }

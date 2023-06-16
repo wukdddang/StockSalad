@@ -6,4 +6,5 @@ data class StockResponse(
     val itmsNm: String, // 종목명
     val mrktCtg: String, // 시장구분
     val clpr: String, // 종가
+    val fltRt: String, // 등락률
 )

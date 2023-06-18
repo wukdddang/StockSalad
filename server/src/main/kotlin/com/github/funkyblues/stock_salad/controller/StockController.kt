@@ -1,6 +1,7 @@
 package com.github.funkyblues.stock_salad.controller
 
 import com.github.funkyblues.stock_salad.model.StockPrice
+import com.github.funkyblues.stock_salad.model.StockPriceResponse
 import com.github.funkyblues.stock_salad.model.StockResponse
 import com.github.funkyblues.stock_salad.util.MongoDBUtil
 import org.springframework.data.domain.Sort
@@ -30,12 +31,13 @@ class StockController {
         @RequestParam("isinCd") isinCd: String,
         @RequestParam("startDate") startDate: String,
         @RequestParam("endDate") endDate: String
-    ): List<StockPrice> {
+    ): List<StockPriceResponse> {
         val mongoTemplate = MongoDBUtil.getMongoTemplate()
         val criteria = Criteria
             .where("isinCd").`is`(isinCd)
             .and("basDt").gte(startDate).lte(endDate)
         val query = Query.query(criteria)
         return mongoTemplate.find(query, StockPrice::class.java)
+            .map { it.getStockPriceResponse() }
     }
 }

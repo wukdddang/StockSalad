@@ -43,4 +43,24 @@ data class StockPrice(
             fltRt = fltRt
         )
     }
+
+    fun getStockPriceResponse(): StockPriceResponse {
+        return StockPriceResponse(
+            basDt = basDt,
+            srtnCd = srtnCd,
+            isinCd = isinCd,
+            itmsNm = itmsNm,
+            mrktCtg = mrktCtg,
+            clpr = clpr,
+            vs = vs,
+            fltRt = fltRt,
+            mkp = mkp,
+            hipr = hipr,
+            lopr = lopr,
+            trqu = trqu,
+            trPrc = trPrc,
+            lstgStCnt = lstgStCnt,
+            mrktTotAmt = mrktTotAmt
+        )
+    }
 }

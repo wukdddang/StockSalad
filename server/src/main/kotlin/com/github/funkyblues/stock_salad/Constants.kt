@@ -34,7 +34,7 @@ object Constants {
         const val SLEEP_TIME = 1000L
         const val DATE_PATTERN = "yyyyMMdd"
         const val MAX_FAIL_COUNT = 5
-        const val MIN_NEWS_COUNT_IN_PAGE = 20
+        const val LIMIT_OF_FIND_NOT_INDEXED_NEWS = 1000
     }
 
     object Stock {
